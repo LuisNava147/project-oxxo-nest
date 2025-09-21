@@ -11,7 +11,7 @@ export class Employee {
     phoneNumber: string;
     @Column({type:"text"})
     email: string;
-    //@Column({type:"uuid"})
-    //provider: string;
+    @Column({type:"text",nullable:true})
+    photoUrl: string;
 }
 
