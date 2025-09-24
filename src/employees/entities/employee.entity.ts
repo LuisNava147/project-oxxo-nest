@@ -1,4 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn }from "typeorm";
+import { ManyToOne } from "typeorm";
+import { Location } from "src/locations/entities/location.entity";
+import { JoinColumn } from "typeorm";
 @Entity()
 export class Employee {
     @PrimaryGeneratedColumn("uuid")
@@ -13,5 +16,11 @@ export class Employee {
     email: string;
     @Column({type:"text",nullable:true})
     photoUrl: string;
+//relacion en BD 
+    @ManyToOne(()=>Location,(location)=>location.employee)
+    @JoinColumn({
+        name:"locationId"
+    })
+    location: Location;
 }
 

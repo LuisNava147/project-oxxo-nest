@@ -1,5 +1,6 @@
 import { Provider } from "src/providers/entities/provider.entity";
 import {Entity, Column,ManyToOne, PrimaryGeneratedColumn }from "typeorm";
+import { JoinColumn } from "typeorm";
 @Entity()
 export class Product {
      @PrimaryGeneratedColumn("uuid")
@@ -15,6 +16,9 @@ export class Product {
     
     @ManyToOne(() => Provider, (provider) => provider.products,{
         eager:true,
+    })
+    @JoinColumn({
+        name:"providerId"
     })
     provider:Provider
 }
