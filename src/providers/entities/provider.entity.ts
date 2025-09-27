@@ -4,9 +4,11 @@ import {Entity, Column, OneToMany, PrimaryGeneratedColumn }from "typeorm";
 export class Provider {
     @PrimaryGeneratedColumn("uuid")
     providerId: string;
-    @Column({type:"text"})
+    @Column('text')
     providerName: string;
-    @Column({type:"text"})
+    @Column('text',{
+        unique:true
+    })
     providerEmail: string;
     @Column({
         type:"text",

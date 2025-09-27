@@ -9,15 +9,17 @@ export class Employee {
     @PrimaryGeneratedColumn("uuid")
     employeeId: string;
     @Column({type:"text"})
-    name: string;
+    employeeName: string;
     @Column({type:"text"})
-    lastname: string;
+    employeeLastname: string;
     @Column({type:"text"})
-    phoneNumber: string;
-    @Column({type:"text"})
-    email: string;
+    employeePhoneNumber: string;
+    @Column('text',{
+        unique:true
+    })
+    employeeEmail: string;
     @Column({type:"text",nullable:true})
-    photoUrl: string;
+    employeePhoto: string;
 //relacion en BD 
     @ManyToOne(()=>Location,(location)=>location.employee)
     @JoinColumn({
