@@ -6,6 +6,8 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { User } from 'src/auth/entities/user.entity';
 import { UserData} from 'src/auth/decorators/user.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @UseGuards(AuthGuard)
 @Controller('providers')
@@ -17,7 +19,8 @@ export class ProvidersController {
     return this.providersService.create(createProviderDto);
   }
 
- 
+  @Roles(["Admin"])
+  @UseGuards(RolesGuard)
   @Get()
   findAll(@UserData() user: User) {
     if(user.userRoles.includes("Employee"))throw new UnauthorizedException("No estas autorizado, solo Admins y manager")
