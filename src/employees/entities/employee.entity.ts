@@ -12,7 +12,7 @@ export class Employee {
     employeeName: string;
     @Column({type:"text"})
     employeeLastname: string;
-    @Column({type:"text"})
+    @Column('text')
     employeePhoneNumber: string;
     @Column('text',{
         unique:true

@@ -24,6 +24,13 @@ export class EmployeesService {
     return this.employeRepository.find();
   }
 
+  findByLocation(id: number){
+    return this.employeRepository.findBy({
+      location:{
+        locationId: id
+      }
+    })
+  }
   findOne(id: string) {
     const employee = this.employeRepository.findOneBy({
       employeeId:id
@@ -34,7 +41,7 @@ export class EmployeesService {
 
  async update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
     const employeeToUpdate = await this.employeRepository.preload({
-      employeeId:id,
+      employeeId: id,
       ...updateEmployeeDto
     })
     if(!employeeToUpdate)throw new NotFoundException()

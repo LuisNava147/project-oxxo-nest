@@ -17,7 +17,11 @@ export class Location {
     locationAddress: string;
     @Column('double precision',{array:true, nullable: true})
     locationLatLng: number[];
-    @OneToOne(()=>Manager)
+
+
+    @OneToOne(()=>Manager, {
+        eager:true,
+    })
     @JoinColumn({
         name: "managerId"
     })
