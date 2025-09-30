@@ -3,15 +3,30 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { Auth } from 'src/auth/decorators/auth-decorator';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ROLES } from 'src/auth/constants/roles.constants';
+import {ApiProperty, ApiPropertyOptional, ApiResponse} from '@nestjs/swagger';
+import { Employee } from './entities/employee.entity';
+import { ApiAuth } from 'src/auth/decorators/api.decorator';
 
 
+@ApiAuth()
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
   @Auth(ROLES.MANAGER)
+  @ApiResponse({
+    status:201,//exito en insertar datos
+    example:{
+      employeeId:"UUID",
+      employeeName: "Luis",
+      employeeEmail: "luis@gmail.com",
+      employeeLastname: "Hernandez",
+      employeePhoneNumber: "4424859526",
+      //employeePhoto:"URL"
+    } as Employee
+  })
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeesService.create(createEmployeeDto);
