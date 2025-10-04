@@ -6,7 +6,7 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ROLES } from 'src/auth/constants/roles.constants';
 import { ApiAuth } from 'src/auth/decorators/api.decorator';
 
-@ApiAuth()
+//@ApiAuth()
 @Controller('locations')
 export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}
@@ -17,7 +17,7 @@ export class LocationsController {
     return this.locationsService.create(createLocationDto);
   }
 
-  @Auth(ROLES.EMPLOYEE,ROLES.MANAGER)
+ // @Auth(ROLES.EMPLOYEE,ROLES.MANAGER)
   @Get()
   findAll() {
     return this.locationsService.findAll();
