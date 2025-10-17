@@ -37,8 +37,11 @@ export class LocationsService {
   }
 
   remove(id: number) {
-    return this.locationRepository.delete({
+    this.locationRepository.delete({
       locationId: id,
     })
+    return {
+      message: "Employee deleted"
+    }
   }
 }

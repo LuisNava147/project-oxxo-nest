@@ -29,7 +29,7 @@ export class ProvidersService {
       providerName:Like(`%${name}%`)
     })
     if(!provider)throw new NotFoundException()
-    return provider
+    return provider;
   }
 
   async update(id: string, updateProviderDto: UpdateProviderDto) {
@@ -46,7 +46,7 @@ export class ProvidersService {
       providerId: id  
     })
     return{
-      message: `Objeto con id ${id} eliminado`
+      message: "Provider deleted"
     }
   }
 }
