@@ -34,6 +34,7 @@ export class Location {
     @ApiProperty({default: "e52c7b77-aec9-4a6f-b031-ddb3eed5d9fb"})
     @OneToOne(()=>Manager, {
         eager:true,
+        onDelete: 'SET NULL',
     })
     @JoinColumn({
         name: "managerId"

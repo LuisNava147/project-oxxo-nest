@@ -4,6 +4,7 @@ import { CreateProviderDto } from './dto/create-provider.dto';
 import { UpdateProviderDto } from './dto/update-provider.dto';
 import { Repository, Like } from 'typeorm';
 import { Provider } from './entities/provider.entity';
+import { Product } from 'src/products/entities/product.entity';
 
 @Injectable()
 export class ProvidersService {
@@ -15,12 +16,19 @@ export class ProvidersService {
     return this.providerRepository.save(createProviderDto)
   }
   findAll() {
-    return this.providerRepository.find();
+    return this.providerRepository.find({relations:{
+      products:true
+    }});
   }
 
   findOne(id: string) {
-    return this.providerRepository.findOneBy({
-      providerId:id
+    return this.providerRepository.findOne({
+      where:{
+        providerId:id
+      },
+      relations:{
+        products:true,
+      }
     })
   }
 
