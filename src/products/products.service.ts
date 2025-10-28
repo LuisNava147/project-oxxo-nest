@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import {v4 as uuid} from "uuid";
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 
@@ -21,18 +20,24 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.productRepository.find(/*{
-      loadEagerRelations: true,
+    return this.productRepository.find(
+      {
+      //loadEagerRelations: true,  
       relations:{
-        provider:true,   sirve para mostrar el provider adjunto a product
+        provider:true,   //sirve para mostrar el provider adjunto a product
       }
-    }*/);
+    });
     
   }
 
   findOne(id: string) {
-   const product = this.productRepository.findOneBy({
-    productId:id
+   const product = this.productRepository.findOne({
+    where: {
+      productId:id
+    },
+    relations: {
+      provider: true
+    }
    })
    if(!product)throw new NotFoundException()
    return product;
