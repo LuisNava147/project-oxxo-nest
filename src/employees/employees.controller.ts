@@ -8,12 +8,14 @@ import { ROLES } from 'src/auth/constants/roles.constants';
 import {ApiProperty, ApiPropertyOptional, ApiResponse} from '@nestjs/swagger';
 import { Employee } from './entities/employee.entity';
 import { ApiAuth } from 'src/auth/decorators/api.decorator';
+import { AwsService } from 'src/aws/aws.service';
 
 
 @ApiAuth()
 @Controller('employees')
 export class EmployeesController {
-  constructor(private readonly employeesService: EmployeesService) {}
+  constructor(private readonly employeesService: EmployeesService, 
+  private readonly awsSevice:AwsService) {}
 
   @Auth(ROLES.MANAGER)
   @ApiResponse({
@@ -39,7 +41,7 @@ export class EmployeesController {
     dest: "./src/employees/employees-photos"  -----> es una prueba para verificar que nuestras imgs llegan a nuestro servidor 
   }*/
   uploadFile(@UploadedFile() file: Express.Multer.File){
-    return "OK"
+    return this.awsSevice.uploadFile(file)
   }
   
 
