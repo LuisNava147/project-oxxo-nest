@@ -19,7 +19,7 @@ export class Employee {
     })
     employeeEmail: string;
     @Column({type:"text",nullable:true})
-    employeePhoto: string;
+    employeePhoto?: string;
 //relacion en BD 
     @ManyToOne(()=>Location,(location)=>location.employee)
     @JoinColumn({

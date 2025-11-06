@@ -15,13 +15,14 @@ private s3 = new S3Client({
 
 async uploadFile(file: Express.Multer.File){
     const key = file.originalname
+    const url = `https://nest-oxxo-tests.s3.us-east-2.amazonaws.com/${key}`
     const bucket = "nest-oxxo-tests"
     const command = new PutObjectCommand({
     Key: key,
     Body: file.buffer,
     Bucket: bucket,
     })
-    const response = await this.s3.send(command)
-    return response
+    await this.s3.send(command)
+    return url;
 }
 }

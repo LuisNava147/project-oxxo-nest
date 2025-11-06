@@ -9,6 +9,7 @@ import {ApiProperty, ApiPropertyOptional, ApiResponse} from '@nestjs/swagger';
 import { Employee } from './entities/employee.entity';
 import { ApiAuth } from 'src/auth/decorators/api.decorator';
 import { AwsService } from 'src/aws/aws.service';
+import { response } from 'express';
 
 
 @ApiAuth()
@@ -35,13 +36,16 @@ export class EmployeesController {
   }
 
   @Auth(ROLES.MANAGER, ROLES.EMPLOYEE)
-  @Post('upload')
+  @Post(":id/upload")
   @UseInterceptors(FileInterceptor('file'))
   /*,{
     dest: "./src/employees/employees-photos"  -----> es una prueba para verificar que nuestras imgs llegan a nuestro servidor 
   }*/
-  uploadFile(@UploadedFile() file: Express.Multer.File){
-    return this.awsSevice.uploadFile(file)
+   async uploadPhoto(@Param('id') id: string, @UploadedFile() file: Express.Multer.File){
+    const response=  await this.awsSevice.uploadFile(file)
+    return this.employeesService.update(id, {
+      employeePhoto: response
+    })
   }
   
 
