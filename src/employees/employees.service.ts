@@ -32,8 +32,13 @@ export class EmployeesService {
     })
   }
   findOne(id: string) {
-    const employee = this.employeRepository.findOneBy({
-      employeeId:id
+    const employee = this.employeRepository.findOne({
+      where: {
+        employeeId:id
+      },
+      relations: {
+        location : true
+      }
     })
     if(!employee) throw new NotFoundException();
     return employee;
