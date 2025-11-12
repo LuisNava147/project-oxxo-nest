@@ -84,9 +84,15 @@ export class EmployeesController {
   @Body() updateEmployeeDto: UpdateEmployeeDto,
   @UploadedFile() file: Express.Multer.File,
   ) {
-    const fileUrl = await this.awsSevice.uploadFile(file);
-    updateEmployeeDto.employeePhoto = fileUrl;
-    return this.employeesService.update(id, updateEmployeeDto);
+    if(!file){
+      return this.employeesService.update(id, updateEmployeeDto);
+    }else{
+      const fileUrl = await this.awsSevice.uploadFile(file);
+      updateEmployeeDto.employeePhoto = fileUrl;
+      return this.employeesService.update(id, updateEmployeeDto);
+    }
+   
+    
   }
 
   @Auth(ROLES.MANAGER)
