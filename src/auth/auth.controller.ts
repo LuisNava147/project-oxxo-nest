@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,Put, BadRequestException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,9 +12,18 @@ import { Cookies } from './decorators/cookies.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post("singup")
-  singUp(@Body()createUserDto:CreateUserDto){
-   return this.authService.registerUser(createUserDto)
+  @Post("register/employee/:id")
+  registerEmployee(@Body()createUserDto:CreateUserDto, @Param("id") id:string){
+    if(createUserDto.userRoles.includes("Admin") || 
+    createUserDto.userRoles.includes("Manager")) throw new BadRequestException("Rol invalido")
+   return this.authService.registerEmployee(id, createUserDto)
+  }
+
+  @Post("register/manager/:id")
+  registerManager(@Body()createUserDto:CreateUserDto, @Param("id") id:string){
+    if(createUserDto.userRoles.includes("Admin") || 
+    createUserDto.userRoles.includes("Manager")) throw new BadRequestException("Rol invalido")
+   return this.authService.registerManager(id, createUserDto)
   }
 
   @Post("login")
