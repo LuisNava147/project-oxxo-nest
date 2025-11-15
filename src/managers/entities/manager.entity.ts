@@ -19,7 +19,7 @@ export class Manager {
     @Column('text')
     managerPhoneNumber: string;
     //Relacion con location 
-    @OneToOne(()=> Location,{nullable:true})
+    @OneToOne(()=> Location,{nullable:true,})
      @JoinColumn({
         name:"locationId"
      })

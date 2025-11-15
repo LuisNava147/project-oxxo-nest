@@ -24,6 +24,7 @@ export class EmployeesService {
     return this.employeRepository.find({
       relations: {
         location : true,
+        user: true,
       }
     });
   }
@@ -41,7 +42,8 @@ export class EmployeesService {
         employeeId:id
       },
       relations: {
-        location : true
+        location : true,
+        user:true
       }
     })
     if(!employee) throw new NotFoundException();
